@@ -1,0 +1,12 @@
+<!-- delete_student.html -->
+
+<h2>Delete Student</h2>
+<p>Are you sure you want to delete <strong>{{ student.name }}</strong> (Roll: {{ student.roll }})?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" style="background-color: red; color: white;">Yes, Delete</button>
+</form>
+
+<br>
+<a href="{% url 'studentdashboard:student_dashboard' %}">Cancel</a>
