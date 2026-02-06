@@ -86,5 +86,34 @@ def home(request):
     '''
     return HttpResponse(html_content)
 
+# Edit Student
+@login_required
+def edit_student(request, student_id):
+    student = StudentProfile.objects.get(id=student_id)
+    
+    if request.method == 'POST':
+        student.name = request.POST.get('name')
+        student.roll = request.POST.get('roll')
+        student.program = request.POST.get('program')
+        student.save()
+        messages.success(request, f'Student {student.name} updated successfully!')
+        return redirect('studentdashboard:student_dashboard')
+    
+    context = {'student': student}
+    return render(request, 'edit_student.html', context)
 
+
+# Delete Student
+@login_required
+def delete_student(request, student_id):
+    student = StudentProfile.objects.get(id=student_id)
+    
+    if request.method == 'POST':
+        student_name = student.name
+        student.delete()
+        messages.success(request, f'Student {student_name} deleted successfully!')
+        return redirect('studentdashboard:student_dashboard')
+    
+    context = {'student': student}
+    return render(request, 'delete_student.html', context)
 
